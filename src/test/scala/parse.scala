@@ -5,7 +5,7 @@ import dispatch._
 
 class ParseSpec extends FunSpec {
 
-  def espn = url("http://demo.ajaxperformance.com/har/espn.har")
+  def espn = "http://demo.ajaxperformance.com/har/espn.har"
 
   def time[T](label: String)(blk: => T): T = {
     val b = System.currentTimeMillis
@@ -16,9 +16,11 @@ class ParseSpec extends FunSpec {
 
   describe("parse") {
     it ("should parse a har file") {
-      val str = time("fetch")(Http(espn > as.String)())
-      val log = time("parse")(Parse(str))
-      println("out %s" format log)
+      val str = time("remote read")(File.Reader(espn))
+      str.map { in =>
+        val log = time("parse")(Parse(in))
+        println("out %s" format log)
+      }.getOrElse("empty har contents")
     }
   }
 }
