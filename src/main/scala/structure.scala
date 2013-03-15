@@ -6,38 +6,39 @@ object Default {
 
 case class Log(creator: Creator,
                pages: Iterable[Page],
-               comment: String = "",
+               entries: Iterable[Entry],
                browser: Option[Browser] = None,
-               version: String = Default.version)
+               version: String = Default.version,
+               comment: Option[String] = None)
 
 case class Creator(name: String,
                    version: String,
-                   comment: String = "")
+                   comment: Option[String] = None)
 
 case class Browser(name: String,
                    version: String,
-                   comment: String = "")
+                   comment: Option[String] = None)
 
-case class Page(startedDateTime: String,
-                id: String,
-                title: String, 
+case class Page(id: String,
+                title: String,
+                startedDateTime: String,
                 pageTiming: PageTimings, 
-                comment: String = "")
+                comment: Option[String] = None)
 
 case class PageTimings(onContentLoaded: Int,
                        onLoad: Int,
-                       comment: String = "")
+                       comment: Option[String] = None)
 
 case class Entry(startedDateTime: String,
                  time: Int,
-                 request: Request,
+                 /*request: Request,
                  response: Response,
                  cache: Cache,
-                 timings: Timings,   
+                 timings: Timings,*/
                  serverIPAddress: Option[String] = None,
                  connection: Option[String] = None,
-                 comment: String = "",
-                 pageRef: String = "")
+                 pageRef: Option[String] = None,
+                 comment: Option[String] = None)
 
 case class Request(method: String,
                    url: String,
@@ -48,7 +49,7 @@ case class Request(method: String,
                    headersSize: Int,
                    bodySize: Int,
                    postData: Option[PostData] = None,
-                   comment: String = "")
+                   comment: Option[String] = None)
 
 case class Response(status: Int,
                     statusText: String,
@@ -59,7 +60,7 @@ case class Response(status: Int,
                     redirectURL: String,
                     headersSize: Int,
                     bodySize: Int,
-                    comment: String = "")
+                    comment: Option[String] = None)
 
 case class Cookie(name: String,
                   value: String,
@@ -67,40 +68,40 @@ case class Cookie(name: String,
                   secure: Option[Boolean] = None,
                   domain: Option[String] = None,
                   expires: Option[String] = None,
-                  httpOnly: Option[Boolean],
-                  comment: String = "")
+                  httpOnly: Option[Boolean] = None,
+                  comment: Option[String] = None)
 
-case class Header(name: String, value: String, comment: String = "")
+case class Header(name: String, value: String, comment: Option[String] = None)
 
-case class QueryParam(name: String, value: String, comment: String = "")
+case class QueryParam(name: String, value: String, comment: Option[String] = None)
 
 case class PostData(mime: String,
                     params: Iterable[PostParam],
                     text: String,
-                    comment: String = "")
+                    comment: Option[String] = None)
 
 case class PostParam(name: String,
                      value: Option[String] = None,
                      fileName: Option[String] = None,
                      contentType: Option[String] = None,
-                     comment: String = "")
+                     comment: Option[String] = None)
 
 case class Content(size: Int,
                    mime: String,
                    text: Option[String] = None,
                    encoding: Option[String] = None,
                    compression: Option[Int] = None,
-                   comment: String = "")
+                   comment: Option[String] = None)
 
 case class Cache(beforeRequest: Option[CacheInfo],
                  afterRequest: Option[CacheInfo],
-                 comment: String = "")
+                 comment: Option[String] = None)
 
 case class CacheInfo(lastAccess: String,
                      etag: String,
                      hitCount: Int,
                      expires: Option[String] = None,
-                     comment: String = "")
+                     comment: Option[String] = None)
 
 case class Timings(send: Int,
                    waiting: Int,
@@ -109,4 +110,4 @@ case class Timings(send: Int,
                    dns: Option[Int] = None,
                    connect: Option[Int] = None,
                    ssl: Option[Int] = None,
-                   comment: String = "")
+                   comment: Option[String] = None)
